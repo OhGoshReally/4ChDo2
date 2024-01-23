@@ -1,0 +1,50 @@
+export interface CatalogReply {
+    no: number,
+    now: String,
+    name: String,
+    com: String,
+    filename: String,
+    ext: String,
+    w: number,
+    h: number,
+    tn_w: number,
+    tn_h: number,
+    tim: number,
+    time: number,
+    md5: String,
+    fsize: number,
+    resto: number,
+    capcode: String
+}
+export interface CatalogThread {
+    no: number,
+    sticky: number,
+    closed: number,
+    now: String,
+    name: String,
+    sub: String,
+    com: String,
+    filename: String,
+    ext: String,
+    w: number,
+    h: number,
+    tn_w: number,
+    tn_h: number,
+    tim: number,
+    time: number,
+    md5: String,
+    fsize: number,
+    resto: number,
+    capcode: String,
+    semantic_url: String,
+    replies: number,
+    images: number,
+    omitted_posts: number,
+    omitted_images: number,
+    last_replies: Array<CatalogReply>,
+    last_modified: number
+}
+export interface CatalogPage {
+    page: number,
+    threads: Array<CatalogThread>
+}

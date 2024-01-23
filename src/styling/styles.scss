@@ -1,0 +1,65 @@
+$primary: #ffccaa;
+$body-bg-dark: #ffffee;
+$body-bg: #ffffee;
+$body-color: #880000;
+$btn-color: #880000;
+$btn-font-weight: 700;
+$chan-light: #ffffee;
+$chan-dark: #ffccaa;
+$chan-accent: #880000;
+
+@import "/node_modules/bootstrap/scss/functions";
+@import "/node_modules/bootstrap/scss/variables";
+@import "/node_modules/bootstrap/scss/mixins";
+
+.btn-primary {
+  color: $chan-accent;
+}
+
+$theme-colors:map-merge($theme-colors, (
+));
+
+@import "/node_modules/bootstrap/scss/bootstrap";
+
+$enable-shadows: true;
+
+.form-select,
+.form-control,
+.form-control:focus {
+  background-color: white;
+  border-width: 2px;
+  border-color: $chan-dark;
+  font-weight: 600;
+  box-shadow: none;
+}
+
+.form-control:focus {
+  border-color: #ffe6d5;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(255, 204, 170, 0.25);
+}
+
+.form-control:disabled {
+  background-color: $chan-light;
+  background-image: none;
+  --bs-form-select-bg-img: none;
+  opacity: 0.5;
+}
+
+.form-control::placeholder {
+  color: $chan-accent;
+  font-weight: 400;
+  opacity: 0.4;
+}
+
+.form-control:-ms-input-placeholder {
+  color: $chan-accent;
+  font-weight: 400;
+  opacity: 0.4;
+}
+
+.form-control::-ms-input-placeholder {
+  color: $chan-accent;
+  font-weight: 400;
+  opacity: 0.4;
+}
