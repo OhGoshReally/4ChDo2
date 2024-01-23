@@ -28,6 +28,10 @@ pub async fn fetch_thumbnail_from_thread(board: String, file_name: String, app_h
 
     let data_dir = app_data_dir(&*app_handle.config()).unwrap();
 
+    let thumbnail_dir_path = Path::new(&data_dir).join("thumbnails");
+
+    fs::create_dir_all(thumbnail_dir_path).unwrap();
+
     let thumbnail_file_path = Path::new(&data_dir).join("thumbnails").join(file_name);
 
     if Path::new(&thumbnail_file_path).exists().not() {
