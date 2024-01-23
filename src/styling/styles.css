@@ -138,14 +138,22 @@ body {
 
 .input-group-pretext .form-control {
   border-left: 0;
+  border-right: 0;
 }
 
 .input-group-pretext .input-group-text {
   border-width: 2px;
-  border-right: 0;
   border-color: #ffccaa;
   background-color: white;
   font-weight: 600;
+}
+
+.input-group-pretext .input-group-text-start {
+  border-right: 0;
+}
+
+.input-group-pretext .input-group-text-end {
+  border-left: 0;
 }
 
 .input-group-pretext .form-control:focus {
@@ -172,7 +180,7 @@ body {
   border-radius: 6px;
 }
 
-.input-group-pretext .input-group-text {
+.input-group-pretext .input-group-text-start {
   padding-right: 6px;
 }
 
@@ -200,4 +208,18 @@ body {
 .input-group-pretext.invalid:focus-within .input-group-text,
 .input-group-pretext.invalid:focus-within .form-control {
   border-color: #c98c8c;
+}
+
+.input-group-text-end .spinner-border {
+  font-size: 8px;
+  width: 18px;
+  height: 18px;
+}
+
+.input-group.disabled .input-group-text-start,
+.input-group.disabled .input-group-text-end {
+  background-color: #ffffee;
+  background-image: none;
+  --bs-form-select-bg-img: none;
+  opacity: 0.5;
 }

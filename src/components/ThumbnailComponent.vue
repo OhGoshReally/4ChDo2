@@ -112,6 +112,7 @@ export default {
     background-clip: content-box;
     overflow: hidden;
     display: flex;
+    /*box-shadow: 0 0 6px 0 rgba(132, 7, 6, 0.3), 0 0 2px 0 rgba(132, 7, 6, 0.2);*/
   }
 
   .thumbnail-image,

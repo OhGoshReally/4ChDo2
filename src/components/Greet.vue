@@ -30,8 +30,13 @@
         <div class="my-3">
           <label for="thread_id_input" class="form-label fw-bold">Thread ID</label>
           <div :class="selectedThreadGroupStyling">
-            <span class="input-group-text" id="basic-addon1">#</span>
-            <input v-model="selectedThread" id="thread_id_input" class="form-control" placeholder="ex. 570368" type="text" spellcheck="false">
+            <span class="input-group-text input-group-text-start">#</span>
+            <input v-model="selectedThread" id="thread_id_input" class="form-control" :disabled="threadsAreLoading" placeholder="ex. 570368" type="text" spellcheck="false">
+            <div class="input-group-text input-group-text-end">
+              <div v-if="fetchingThread" class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
           </div>
         </div>
         <button @click="testConvertFileSrc" class="btn btn-primary w-100 mt-3">Click here!!!</button>
@@ -56,21 +61,25 @@
       name: string,
       greetMsg: string,
       files: string,
-      boardsIsLoading: Boolean,
+      boardsIsLoading: boolean,
+      threadsAreLoading: boolean,
       availableBoards: Array<BoardObject>,
       selectedBoard: string,
       selectedThread: string,
-      selectedCatalogThreads: Array<CatalogThread>
+      selectedCatalogThreads: Array<CatalogThread>,
+      fetchingThread: boolean
     } {
       return {
         name: '',
         greetMsg: '',
         files: '',
         boardsIsLoading: false,
+        threadsAreLoading: false,
         availableBoards: [],
         selectedBoard: 'none',
         selectedThread: '',
-        selectedCatalogThreads: []
+        selectedCatalogThreads: [],
+        fetchingThread: false
       };
     },
     computed: {
@@ -81,6 +90,7 @@
         return {
           'input-group': true,
           'input-group-pretext': true,
+          'disabled': this.threadsAreLoading,
           'mb-3': true,
           'valid': this.selectedThread.length > 0 && this.availableThreadsAsStrings.includes(this.selectedThread),
           'invalid': this.selectedThread.length > 0 && !this.availableThreadsAsStrings.includes(this.selectedThread)
@@ -108,7 +118,7 @@
         this.boardsIsLoading = false;
       },
       async getCatalogForSelectedBoard() {
-        this.boardsIsLoading = true;
+        this.threadsAreLoading = true;
 
         if (this.selectedBoard !== 'none') {
           const catalogPages: Array<CatalogPage> = await invoke("fetch_catalog", { board: this.selectedBoard });
@@ -118,7 +128,7 @@
           this.selectedCatalogThreads = [];
         }
 
-        this.boardsIsLoading = false;
+        this.threadsAreLoading = false;
       },
       flattenCatalogThreadStructure(pages: Array<CatalogPage>): Array<CatalogThread> {
         return pages.map(p => p.threads).flat().sort((a, b) => (a.time > b.time) ? 1 : -1);
