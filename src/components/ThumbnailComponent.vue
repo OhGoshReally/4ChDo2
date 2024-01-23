@@ -7,14 +7,14 @@
       <div v-if="!hasLoaded" class="thumbnail-placeholder">
         <font-awesome-icon :icon="['fas', 'image']" size="lg" class="m-auto"/>
       </div>
-      <div class="thumbnail-image-overlay"></div>
+      <div v-if="hasLoaded" class="thumbnail-image-overlay"></div>
     </div>
     <div :class="thumbnailPopoverContainerStyling">
       <div class="thumbnail-popover" :style="`background-image: url(${ imageUrl })`">
         <div class="thumbnail-popover-overlay"></div>
         <h5 class="mb-3 fw-bold z-0"># {{ thread.no }}</h5>
         <h5 class="popover-title-text z-0">{{ thread.sub }}</h5>
-        <p class="popover-body-text z-0">{{ thread.com }}</p>
+        <p class="popover-body-text z-0" v-html="thread.com"></p>
         <p class="d-flex flex-row align-items-center m-auto z-0">
           <font-awesome-icon :icon="['fas', 'image']" size="xs" class="me-2"/>
           <span class="fw-semibold">{{ thread.images }} images</span>
@@ -145,7 +145,7 @@ export default {
     width: 100%;
     height: 100%;
     display: flex;
-    background-color: #ffccaa;
+    background-color: rgba(255, 204, 170, 0.75);
     opacity: 0.75;
   }
 

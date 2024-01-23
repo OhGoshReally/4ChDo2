@@ -15,13 +15,13 @@
       </div>
 
       <div v-if="showBoardThreads" class="col d-flex flex-row justify-content-center my-4 px-5">
-        <div class="d-flex flex-column my-auto mx-2">
+        <div class="thread-arrow-left">
           <font-awesome-icon :icon="['fas', 'caret-left']" size="2xl"/>
         </div>
         <div class="d-flex flex-row flex-shrink-1 overflow-hidden gap-3 flex-grow-1 flex-nowrap justify-content-between">
             <Thumbnail v-for="(thread, index) in selectedCatalogThreads" @click-thread="selectThread(thread.no)" :thread="thread" :board="selectedBoard" :index="index" :key="thread.no"></Thumbnail>
         </div>
-        <div class="d-flex flex-column my-auto mx-2">
+        <div class="thread-arrow-right">
           <font-awesome-icon :icon="['fas', 'caret-right']" size="2xl"/>
         </div>
       </div>
@@ -140,3 +140,35 @@
     }
   };
 </script>
+
+<style scoped>
+    .thread-arrow-left,
+    .thread-arrow-right {
+      display: flex;
+      flex-direction: column;
+      margin-top: auto;
+      margin-bottom: auto;
+      padding: 1.5rem 0.5rem;
+      border-radius: .5rem;
+      cursor: pointer;
+      transition: background-color .10s ease-in-out;
+    }
+
+    .thread-arrow-left {
+      margin-right: 1rem;
+    }
+
+    .thread-arrow-right {
+      margin-left: 1rem;
+    }
+
+    .thread-arrow-left:hover,
+    .thread-arrow-right:hover {
+      background-color: rgba(255, 204, 170, .25);
+    }
+
+    .thread-arrow-left:active,
+    .thread-arrow-right:active {
+      background-color: rgba(255, 204, 170, .5);
+    }
+</style>
