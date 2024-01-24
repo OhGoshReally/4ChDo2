@@ -178,6 +178,7 @@ body {
 
 .input-group-pretext {
   border-radius: 6px;
+  height: 45px;
 }
 
 .input-group-pretext .input-group-text-start {

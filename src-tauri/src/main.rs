@@ -18,7 +18,8 @@ async fn main() {
             file_utils::listfiles,
             api_utils::fetch_boards,
             api_utils::fetch_catalog,
-            api_utils::fetch_thumbnail_from_thread
+            api_utils::fetch_thumbnail_from_thread,
+            api_utils::fetch_thread
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

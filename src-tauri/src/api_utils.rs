@@ -1,10 +1,8 @@
 use reqwest;
-use futures::{ executor };
-use serde_json::{ Value };
-use std::{ fs };
-use std::path::{ Path };
+use futures::executor;
+use serde_json::Value;
+use std::fs;
 use tauri::api::path::app_data_dir;
-use std::ops::Not;
 
 #[tauri::command]
 pub fn fetch_boards() -> Value {
@@ -22,24 +20,27 @@ pub fn fetch_catalog(board: &str) -> Value {
 }
 
 #[tauri::command]
+pub fn fetch_thread(board: &str, thread: &str) -> Value {
+    let url_str = format!("https://a.4cdn.org/{}/thread/{}.json", board, thread);
+    let url_string: &str = url_str.as_str();
+    let json: Value = executor::block_on(fetch_json(url_string)).unwrap();
+    json
+}
+
+#[tauri::command]
 pub async fn fetch_thumbnail_from_thread(board: String, file_name: String, app_handle: tauri::AppHandle) -> String {
     let image_url = format!("https://i.4cdn.org/{}/{}", board, file_name);
-    let image_url_str = image_url.as_str();
 
     let data_dir = app_data_dir(&*app_handle.config()).unwrap();
+    let thumbnail_dir_path = data_dir.join("thumbnails");
+    fs::create_dir_all(&thumbnail_dir_path).unwrap();
 
-    let thumbnail_dir_path = Path::new(&data_dir).join("thumbnails");
+    let thumbnail_file_path = thumbnail_dir_path.join(&file_name);
 
-    fs::create_dir_all(thumbnail_dir_path).unwrap();
-
-    let thumbnail_file_path = Path::new(&data_dir).join("thumbnails").join(file_name);
-
-    if Path::new(&thumbnail_file_path).exists().not() {
-        let file_path: &Path = thumbnail_file_path.as_path();
-
-        let response = reqwest::get(image_url_str).await.unwrap();
+    if !thumbnail_file_path.exists() {
+        let response = reqwest::get(&image_url).await.unwrap();
         let content = response.bytes().await.unwrap();
-
+        let file_path = thumbnail_file_path.as_path();
         fs::write(file_path, content).unwrap();
     }
 
@@ -47,8 +48,9 @@ pub async fn fetch_thumbnail_from_thread(board: String, file_name: String, app_h
 }
 
 async fn fetch_json(url: &str) -> Result<Value, reqwest::Error> {
-    let response = reqwest::get(url).await?;
-    let body = response.text().await?;
-    let json: Value = serde_json::from_str(body.as_str()).unwrap();
+    let json: Value = reqwest::get(url)
+        .await?
+        .json()
+        .await?;
     Ok(json)
 }

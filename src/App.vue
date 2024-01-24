@@ -1,26 +1,26 @@
 <template>
-  <div class="container pt-4">
-    <h1 class="display-4 fw-bold">4ChDo 2.0</h1>
+  <div class="container-fluid text-center pt-4">
+    <h1 class="main-title mb-1">4ChDo 2.0</h1>
 
-    <p class="m-0">4chan downloader</p>
-    <p>The easy way to download images from 4chan</p>
+    <p class="sub-title m-0">4chan downloader</p>
+    <p class="sub-title">The easy way to download images from 4chan</p>
 
-    <Greet />
+    <Main />
   </div>
 </template>
 
 <style scoped>
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
-}
+  .main-title {
+    font-size: calc(1.25rem + 1.5vw);
+    line-height: 1.2;
+    font-weight: bold;
+  }
 
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #249b73);
-}
+  .sub-title {
+    font-size: 15px;
+  }
 </style>
 
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import Greet from "./components/Greet.vue";
+  import Main from "./components/Main.vue";
 </script>

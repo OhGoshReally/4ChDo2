@@ -1,6 +1,6 @@
 <template>
   <div class="thumbnail-image-container">
-    <div class="thumbnail-image" :style="thumbnailStyling" @click="clickThread">
+    <div :class="thumbnailImageClass" :style="thumbnailStyling" @click="clickThread">
       <video v-if="isWebm" class="video-player" controls width="120">
         <source :src="imageUrl" type="video/webm">
       </video>
@@ -43,6 +43,10 @@ export default {
       index: {
         type: Number,
         required: true
+      },
+      selectedThread: {
+        type: String,
+        required: true
       }
     },
     data() : {
@@ -57,6 +61,12 @@ export default {
       };
     },
     computed: {
+      thumbnailImageClass(): object {
+        return {
+          'thumbnail-image': true,
+          'active': this.selectedThread == this.thread.no.toString()
+        }
+      },
       thumbnailPopoverContainerStyling(): object {
         return {
           'thumbnail-popover-container': true,
@@ -90,147 +100,3 @@ export default {
     }
   };
 </script>
-
-<style scoped>
-  .thumbnail-image-container,
-  .thumbnail-image {
-    height: 100px;
-    width: 120px;
-    position: relative;
-  }
-
-  .thumbnail-image {
-    background-color: white;
-    border-radius: 1rem;
-    border-width: 2px;
-    border-style: solid;
-    border-color: transparent;
-    cursor: pointer;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-clip: content-box;
-    overflow: hidden;
-    display: flex;
-    /*box-shadow: 0 0 6px 0 rgba(132, 7, 6, 0.3), 0 0 2px 0 rgba(132, 7, 6, 0.2);*/
-  }
-
-  .thumbnail-image,
-  .thumbnail-image-overlay {
-    transition: border-color .10s ease-in-out, box-shadow .10s ease-in-out, opacity .10s ease-in-out;
-  }
-
-  .thumbnail-image:hover {
-    border-color: #ffccaa;
-  }
-
-  .thumbnail-image:hover .thumbnail-image-overlay {
-    opacity: 0.25;
-  }
-
-  .thumbnail-image:active .thumbnail-image-overlay {
-    opacity: 0.5;
-  }
-
-  .thumbnail-image:active {
-    box-shadow: 0 0 7px 0 #ffccaa;
-  }
-
-  .video-player {
-    width: 100%;
-    height: 100%;
-    margin-bottom: auto;
-  }
-
-  .thumbnail-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    background-color: rgba(255, 204, 170, 0.75);
-    opacity: 0.75;
-  }
-
-  .thumbnail-image-overlay {
-    height: 100%;
-    width: 100%;
-    background-color: #ffffee;
-    opacity: 0;
-  }
-
-  .thumbnail-popover-container {
-    position: absolute;
-    top: 0;
-  }
-
-  .thumbnail-popover-container.left-align {
-    left: -185px;
-  }
-
-  .thumbnail-popover-container.right-align {
-    right: -5px;
-  }
-
-  .thumbnail-popover {
-    width: 180px;
-    /*background-color: #ffffee;*/
-    background-color: rgba(255, 255, 238, 0.8);
-    position: fixed;
-    z-index: 50;
-    border-radius: 1rem;
-    border-width: 2px;
-    border-style: solid;
-    /*border-color: #ffccaa;*/
-    border-color: rgba(255, 204, 170, 0.8);
-    box-shadow: 0 7px 6px 0 #00000024, 0 2px 3px 0 #00000024;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    padding: 1.25rem .5rem 1.25rem .5rem;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-clip: border-box;
-  }
-
-  .thumbnail-popover-overlay {
-    height: 100%;
-    width: 100%;
-    background-color: rgb(255 255 238 / 85%);
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 1rem;
-    box-shadow: 0 0 0 3px #ffccaa;
-  }
-
-  .thumbnail-image:not(:hover) + .thumbnail-popover-container {
-    display: none;
-  }
-
-  .thumbnail-image:hover + .thumbnail-popover-container {
-    display: block;
-  }
-
-  .popover-title-text {
-    font-size: 14px;
-    font-weight: 700;
-    margin: 0 0 6px 0;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-
-  .popover-body-text {
-    font-size: 11px;
-    line-height: normal;
-    margin-bottom: 1rem;
-    font-weight: 600;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    -webkit-box-orient: vertical;
-  }
-</style>
